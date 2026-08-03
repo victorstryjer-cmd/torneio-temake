@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temake & Associados - Inscrição Torneio 3v3</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 0;
+            border-bottom: 3px solid #bfff00;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #bfff00;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+
+        .hero-image {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border: 3px solid #bfff00;
+        }
+
+        .form-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 10px;
+            border: 2px solid #bfff00;
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            color: #bfff00;
+            font-size: 24px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #bfff00;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #bfff00;
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            background: rgba(191, 255, 0, 0.1);
+            box-shadow: 0 0 10px rgba(191, 255, 0, 0.3);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: #bfff00;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(191, 255, 0, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .info-box {
+            background: rgba(191, 255, 0, 0.1);
+            border-left: 4px solid #bfff00;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+
+        .info-box p {
+            margin: 8px 0;
+            color: #ddd;
+        }
+
+        .hidden-pdf {
+            display: none;
+            position: absolute;
+            left: -9999px;
+        }
+
+        .pdf-container {
+            width: 210mm;
+            height: 297mm;
+            padding: 30px;
+            background: #fff;
+            color: #000;
+        }
+
+        .pdf-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #bfff00;
+        }
+
+        .pdf-logo {
+            font-size: 32px;
+            font-weight: bold;
+            color: #bfff00;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .pdf-subtitle {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .pdf-image {
+            width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px solid #bfff00;
+        }
+
+        .pdf-content {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .pdf-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 15px;
+        }
+
+        .pdf-teamname {
+            font-size: 24px;
+            color: #bfff00;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .pdf-members {
+            text-align: left;
+            background: rgba(191, 255, 0, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border-left: 4px solid #bfff00;
+        }
+
+        .pdf-members-title {
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 10px;
+        }
+
+        .pdf-members-list {
+            font-size: 14px;
+            color: #333;
+            line-height: 1.8;
+        }
+
+        .pdf-thanks {
+            margin-top: 40px;
+            font-size: 14px;
+            color: #333;
+            line-height: 1.8;
+        }
+
+        .pdf-footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 2px solid #bfff00;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .success-message {
+            display: none;
+            background: rgba(191, 255, 0, 0.2);
+            border: 2px solid #bfff00;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #bfff00;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">⭐ TEMAKE & ASSOCIADOS ⭐</div>
+            <div class="subtitle">Campeonato de Futebol 3v3</div>
+            <div style="font-size: 14px; color: #999;">30 de Agosto de 2026</div>
+        </header>
+
+        <img id="heroImage" class="hero-image" src="data:image/placeholder" alt="Temake e Associados">
+
+        <div class="success-message" id="successMessage">
+            ✓ Inscrição realizada com sucesso! PDF gerado e pronto para download.
+        </div>
+
+        <div class="info-box">
+            <p><strong>ℹ️ Informações do Torneio:</strong></p>
+            <p>📅 Data: 30 de Agosto de 2026</p>
+            <p>⚽ Formato: Futebol 3v3 | Jogos rápidos, muita emoção!</p>
+            <p>🏆 Prêmios para o time campeão</p>
+            <p>⚖️ Competição Fair Play - Respeito, amizade e muito futebol!</p>
+        </div>
+
+        <div class="form-section">
+            <h2>📝 Inscreva seu Time</h2>
+
+            <form id="inscriptionForm">
+                <div class="form-group">
+                    <label for="teamName">Nome do Time *</label>
+                    <input type="text" id="teamName" name="teamName" required placeholder="Digite o nome do seu time">
+                </div>
+
+                <div class="form-group">
+                    <label>Integrantes (3 jogadores) *</label>
+                    <div class="form-row">
+                        <div>
+                            <label for="player1" style="font-size: 12px;">Jogador 1</label>
+                            <input type="text" id="player1" name="player1" required placeholder="Nome do jogador">
+                        </div>
+                        <div>
+                            <label for="player2" style="font-size: 12px;">Jogador 2</label>
+                            <input type="text" id="player2" name="player2" required placeholder="Nome do jogador">
+                        </div>
+                        <div>
+                            <label for="player3" style="font-size: 12px;">Jogador 3</label>
+                            <input type="text" id="player3" name="player3" required placeholder="Nome do jogador">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email de Contato *</label>
+                    <input type="email" id="email" name="email" required placeholder="seu@email.com">
+                </div>
+
+                <button type="submit">⚽ INSCREVER TIME & GERAR PDF</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- PDF oculto -->
+    <div id="pdfContent" class="hidden-pdf">
+        <div class="pdf-container">
+            <div class="pdf-header">
+                <div class="pdf-logo">⭐ TEMAKE & ASSOCIADOS ⭐</div>
+                <div class="pdf-subtitle">Campeonato de Futebol 3v3 - 30 de Agosto de 2026</div>
+            </div>
+
+            <img id="pdfImage" class="pdf-image" src="data:image/placeholder" alt="Temake">
+
+            <div class="pdf-content">
+                <div class="pdf-title">🎉 PARABÉNS!</div>
+                <div class="pdf-teamname" id="pdfTeamName">Nome do Time</div>
+                <p style="font-size: 16px; color: #333; margin-bottom: 30px;">
+                    foi inscrito com sucesso no Campeonato!
+                </p>
+            </div>
+
+            <div class="pdf-members">
+                <div class="pdf-members-title">Integrantes do Time:</div>
+                <div class="pdf-members-list">
+                    <div>✓ <span id="pdfPlayer1">Jogador 1</span></div>
+                    <div>✓ <span id="pdfPlayer2">Jogador 2</span></div>
+                    <div>✓ <span id="pdfPlayer3">Jogador 3</span></div>
+                </div>
+            </div>
+
+            <div class="pdf-thanks">
+                <p style="font-size: 16px; font-weight: bold; margin-bottom: 15px;">Muito obrigado!</p>
+                <p>
+                    Agradecemos a participação de <strong id="pdfAllPlayers">jogadores</strong> neste campeonato!
+                </p>
+                <p style="margin-top: 15px;">
+                    Que seja uma experiência inesquecível repleta de emoção, amizade e muito futebol!
+                </p>
+                <p style="margin-top: 15px; font-weight: bold;">
+                    Nos vemos no dia 30 de Agosto! ⚽
+                </p>
+            </div>
+
+            <div class="pdf-footer">
+                <p>Campeonato Temake & Associados - Futebol 3v3</p>
+                <p>Gerado em: <span id="pdfDate"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configurar data atual no PDF
+        const today = new Date();
+        const dateStr = today.toLocaleDateString('pt-BR', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+        document.getElementById('pdfDate').textContent = dateStr;
+
+        // Carregar imagem (você precisa substituir pela URL ou arquivo da foto)
+        // Exemplo: document.getElementById('heroImage').src = 'caminho/para/foto-grupo.jpg';
+        // Por enquanto usando cor de fundo como placeholder
+        const placeholderSrc = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22300%22%3E%3Crect fill=%22%23333%22 width=%22800%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2224%22 fill=%22%23bfff00%22%3E[Foto do Grupo Temake]%3C/text%3E%3C/svg%3E';
+
+        document.getElementById('heroImage').src = placeholderSrc;
+        document.getElementById('pdfImage').src = placeholderSrc;
+
+        // Lidar com envio do formulário
+        document.getElementById('inscriptionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Obter valores
+            const teamName = document.getElementById('teamName').value;
+            const player1 = document.getElementById('player1').value;
+            const player2 = document.getElementById('player2').value;
+            const player3 = document.getElementById('player3').value;
+
+            // Preencher PDF
+            document.getElementById('pdfTeamName').textContent = teamName;
+            document.getElementById('pdfPlayer1').textContent = player1;
+            document.getElementById('pdfPlayer2').textContent = player2;
+            document.getElementById('pdfPlayer3').textContent = player3;
+            document.getElementById('pdfAllPlayers').textContent = `${player1}, ${player2} e ${player3}`;
+
+            // Mostrar mensagem de sucesso
+            const successMsg = document.getElementById('successMessage');
+            successMsg.classList.add('show');
+            setTimeout(() => {
+                successMsg.classList.remove('show');
+            }, 5000);
+
+            // Gerar PDF
+            const element = document.getElementById('pdfContent').querySelector('.pdf-container');
+            const opt = {
+                margin: 0,
+                filename: `${teamName}-inscricao.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(element).save();
+
+            // Limpar formulário
+            setTimeout(() => {
+                document.getElementById('inscriptionForm').reset();
+            }, 500);
+        });
+
+        // Função para carregar imagem do arquivo
+        function carregarImagemGrupo(arquivoOuURL) {
+            const img = new Image();
+            img.onload = function() {
+                document.getElementById('heroImage').src = img.src;
+                document.getElementById('pdfImage').src = img.src;
+            };
+            img.src = arquivoOuURL;
+        }
+
+        // Carrega a imagem do grupo automaticamente
+        carregarImagemGrupo('imagens/grupo.jpg');
+    </script>
+</body>
+</html>
